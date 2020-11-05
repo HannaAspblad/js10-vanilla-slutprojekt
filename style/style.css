@@ -1,0 +1,15 @@
+.active {
+    display: block;
+}
+
+.home {
+    display: none;
+}
+
+.search{
+    display: none;
+}
+
+.beer-info-page{
+    display: none;
+}
