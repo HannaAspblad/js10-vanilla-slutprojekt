@@ -1,7 +1,6 @@
-.active {
+section.active {
     display: block;
 }
-
 .home {
     display: none;
 }
