@@ -1,4 +1,4 @@
-const links = document.querySelectorAll("nav > a")
+const links = document.querySelectorAll("a")
 
 for(let link of links){
     link.addEventListener("click", () =>{
