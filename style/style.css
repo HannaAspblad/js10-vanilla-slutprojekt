@@ -12,3 +12,15 @@ section.active {
 .beer-info-page{
     display: none;
 }
+
+header {
+    background-image: url(../beer.jpg);
+    height: 200px;
+}
+
+.beer-card{
+    background-color: aquamarine;
+    height: 500px;
+    width: 250px;
+
+}
