@@ -14,7 +14,7 @@
 body{
     margin: 0;
     font-family: arial;
-    background-color: var(--color-whitesmoke);
+    background-color: var(--color-grey);
 }
 
 /*-----------fonts-----------*/
@@ -98,7 +98,7 @@ section.active {
 }
 
 .beer-card{
-    background-color: aquamarine;
+    background-color: var(--color-whitesmoke);
     height: 500px;
     width: 250px;
     grid-column: 1;
@@ -115,7 +115,7 @@ section.active {
 .info{
     display: none;
     grid-column: 2;
-    background-color: blueviolet;
+    background-color: white;
     border-radius: 10px 10px 10px 10px;
 }
 
