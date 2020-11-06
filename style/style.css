@@ -1,9 +1,19 @@
 section.active {
     display: block;
 }
+
+
 .home {
     display: none;
 }
+
+.container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100%;
+    
+}
+
 
 .search{
     display: none;
@@ -11,10 +21,12 @@ section.active {
 
 .info{
     display: none;
+    grid-column: 2;
+    background-color: blueviolet;
 }
 
 header {
-    background-image: url(../beer.jpg);
+    background-image: url(../images/beer.jpg);
     height: 200px;
 }
 
@@ -22,5 +34,6 @@ header {
     background-color: aquamarine;
     height: 500px;
     width: 250px;
+    grid-column: 1;
 
 }
