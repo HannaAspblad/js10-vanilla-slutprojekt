@@ -18,36 +18,51 @@ async function getRandomBeer(){
 }
 
 async function renderRandomBeer(){
-    const beerUL = document.querySelector(".info-list")
-    const randomBeerItem = document.createElement("p")
-    beerUL.append(randomBeerItem)
+    const beerTitle = document.querySelector(".beer-name")
+    const beerDesc = document.querySelector(".description")
+    const alcoholVol = document.querySelector(".alcohol-by-volume")
+    const beerIngr = document.querySelector(".ingredients")
+    const beerHops = document.querySelector(".hops")
+    const foodPair = document.querySelector(".food-pairing")
+    const brewerTips = document.querySelector(".brewers-tips")
 
     const randomBeer = await getRandomBeer()
+    
 
-    randomBeerItem.innerText = `
-    Description: ${randomBeer[0].description}
-    ${randomBeer[0].volume.value}
-    ${randomBeer[0].volume.unit}
-    
-    `
-    
+    beerTitle.innerHTML = `${randomBeer[0].name}`
+    beerDesc.innerHTML = `${randomBeer[0].description}`
+    alcoholVol.innerHTML = `${randomBeer[0].volume.value}  ${randomBeer[0].volume.unit}`
+    beerIngr.innerHTML = `${randomBeer[0].ingredients.malt[name]}`
+    beerHops.innerHTML = `${randomBeer[0].ingredients}`
+    foodPair.innerHTML = `${randomBeer[0].food_pairing}`
+    brewerTips.innerHTML = `${randomBeer[0].brewers_tips}`
+
+
+
+
+
     renderImageCard(randomBeer)
 
 }
-// Description
-// Image
-// Alcohol by volume
-// Volume
-// Ingredients
-// Hops
-// Food pairing
-// Brewers tips
+
+getAnotherBeer()
+
+function getAnotherBeer(){
+
+    const randomizeButton = document.querySelector(".randomize-button")
+    randomizeButton.addEventListener("click", function(){
+        
+    
+        renderRandomBeer()
+        beerInfoPage.style.display = "none"
+    })
+}
+
 
 function renderImageCard(beer){
-const beerCardDiv = document.querySelector(".beer-card")
-const imageElement = document.createElement("img")
-beerCardDiv.append(imageElement)
-console.log(beer[0].image_url)
+
+const imageElement = document.querySelector("img")
+
 
 imageElement.src = `
 ${beer[0].image_url}`
@@ -72,8 +87,13 @@ for(let link of navLinks){
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
         beerInfoPage.style.display = "none"
-        
+            
+
+
+            
     }
+    
+    
     )
 }
 
