@@ -1,7 +1,91 @@
+
+/*-----------color variables-----------*/
+
+:root {
+
+    --color-whitesmoke: whitesmoke;
+    --color-darkgrey: rgb(53, 53, 53);
+    --color-grey: grey;
+    --color-darkgrey-transparent: rgba(53, 53, 53, 0.425);
+       
+}
+
+
+body{
+    margin: 0;
+    font-family: arial;
+    background-color: var(--color-whitesmoke);
+}
+
+/*-----------fonts-----------*/
+
+h1{
+    color: var(--color-whitesmoke);
+    font-size: 80px;
+}
+
+h2 {
+
+    color: var(--color-darkgrey)
+}
+
+
+
+
+
+
+/*-----------nav bar-----------*/
+
+nav{
+    display: flex;
+    align-items: center;
+    background-color: var(--color-darkgrey);
+    height: 60px;
+}
+
+nav a {
+text-decoration: none;
+color: var(--color-whitesmoke);
+padding: 0 10px;
+
+}
+
+nav a:visited{
+
+text-decoration: none;   
+color: var(--color-whitesmoke);
+}
+
+nav a:hover{
+
+    text-decoration: none;
+    color: var(--color-grey);
+}
+
+
+
+
+
+
+header {
+    background-image: url("../images/beer.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+main{
+    height: 800px;
+}
+
 section.active {
     display: block;
 }
-
 
 .home {
     display: none;
@@ -11,23 +95,6 @@ section.active {
     display: grid;
     grid-template-columns: 50% 50%;
     grid-template-rows: 100%;
-    
-}
-
-
-.search{
-    display: none;
-}
-
-.info{
-    display: none;
-    grid-column: 2;
-    background-color: blueviolet;
-}
-
-header {
-    background-image: url(../images/beer.jpg);
-    height: 200px;
 }
 
 .beer-card{
@@ -35,5 +102,61 @@ header {
     height: 500px;
     width: 250px;
     grid-column: 1;
-
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
+
+.beer-card img{
+    max-width: 100%;
+    max-height: 100%;
+    
+    }
+
+.info{
+    display: none;
+    grid-column: 2;
+    background-color: blueviolet;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.randomize-button{
+    box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
+	background-color:#ededed;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	color:#777777;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+
+.randomize-button:hover {
+	background:linear-gradient(to bottom, #dfdfdf 5%, #ededed 100%);
+	background-color:#dfdfdf;
+}
+
+.randomize-button:active {
+	position:relative;
+	top:1px;
+}
+
+.search{
+    display: none;
+}
+
+footer{
+
+    background-color: var(--color-darkgrey);
+    height: 300px;
+}
+
+
+
+
+
