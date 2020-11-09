@@ -1,9 +1,9 @@
 getData()
-renderRandomBeer()
+renderBeerInfo()
 
 async function getData(){
 
-    const request = await fetch("https://api.punkapi.com/v2/beers/")
+    const request = await fetch("https://api.punkapi.com/v2/beers?per_page=80") //tio per sida + variabel för att plussa på
     const data = await request.json()
 
     return data
@@ -17,7 +17,7 @@ async function getRandomBeer(){
     return data
 }
 
-async function renderRandomBeer(){
+async function renderBeerInfo(){ //ta en input så man kan skicka in både random och specifik öl
     const beerTitle = document.querySelector(".beer-name")
     const beerDesc = document.querySelector(".description")
     const alcoholVol = document.querySelector(".alcohol-by-volume")
@@ -25,6 +25,7 @@ async function renderRandomBeer(){
     const beerHops = document.querySelector(".hops")
     const foodPair = document.querySelector(".food-pairing")
     const brewerTips = document.querySelector(".brewers-tips")
+    const beerImg = document.querySelector(".beer-info-img")
 
     const randomBeer = await getRandomBeer()
     
@@ -36,6 +37,7 @@ async function renderRandomBeer(){
     beerHops.innerHTML = `${randomBeer[0].ingredients}`
     foodPair.innerHTML = `${randomBeer[0].food_pairing}`
     brewerTips.innerHTML = `${randomBeer[0].brewers_tips}`
+    beerImg.src = `${randomBeer[0].image_url}`
 
 
 
@@ -53,7 +55,7 @@ function getAnotherBeer(){
     randomizeButton.addEventListener("click", function(){
         
     
-        renderRandomBeer()
+        renderBeerInfo()
         beerInfoPage.style.display = "none"
     })
 }
@@ -85,7 +87,7 @@ for(let link of navLinks){
 
             if(e.target.innerText == "home"){
 
-                renderRandomBeer()
+                renderBeerInfo()
             }
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
@@ -116,33 +118,69 @@ const inputField = document.querySelector(".beer-input")
 inputField.addEventListener("keyup", () =>{
    
     const search = inputField.value
-    showList(search)
+    showSuggestions(search)
 } )
 
-const ul = document.querySelector(".beer-suggestions")
-console.log(ul)
 
-async function showList(search){
+
+const ul = document.querySelector(".beer-suggestions")
+const beerListContainer = document.querySelector(".beer-list")
+
+
+async function showSuggestions(search){
+
+    
     const result = await getData()
+    clearList()
+    showList()
+    
+
     
     for (let i = 0; i < result.length; i++) {
-    
-        let suggestion = result[i].name
         
-        if(suggestion.includes(search)){
-
+        let suggestion = result[i].name
+    
+       if(suggestion.toLowerCase().includes(search.toLowerCase())){
+           
+            
+            
             const li = document.createElement("li")
             ul.append(li)
             li.innerHTML = suggestion
             
+            
         }
+
+        if(search.length == 0){
+
+            
+            clearList()
+            beerListContainer.style.display = "none"
+        }
+    
     }
-
-
-
 
 }
 
 
 
 
+const listItem = document.querySelector(".beer-suggestions li")
+
+ul.addEventListener("click", function(e){
+
+    renderBeerInfo(e.target.innerText)
+    
+})
+
+
+
+function clearList(){
+
+    ul.innerHTML = ""
+}
+
+function showList(){
+
+    beerListContainer.style.display = "block"
+}

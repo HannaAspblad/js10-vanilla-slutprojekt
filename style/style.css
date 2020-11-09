@@ -117,6 +117,7 @@ section.active {
     grid-column: 2;
     background-color: white;
     border-radius: 10px 10px 10px 10px;
+    box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
 
 .randomize-button{
@@ -157,12 +158,28 @@ footer{
 }
 
 .beer-list{
+    display: none;
     height: 500px;
     width: 250px;
-    background-color: palegoldenrod;
+    background-color: white;
+    border-radius: 10px 10px 10px 10px;
+    grid-column: 1;
+    box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
+}
+
+.beer-suggestions {
+
+    list-style: n;
+}
+
+.beer-info-img {
+
+max-height: 200px;
 }
 
 
+.beer-input{
 
-
-
+    height: 30px;
+    grid-column: 1;
+}
