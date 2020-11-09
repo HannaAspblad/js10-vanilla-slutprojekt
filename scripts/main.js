@@ -78,21 +78,21 @@ const navLinks = document.querySelectorAll("nav > a")
 const beerInfoPage = document.querySelector(".info")
 
 for(let link of navLinks){
-    link.addEventListener("click", () =>{
+    link.addEventListener("click", (e) =>{
         document.querySelectorAll("main > section").forEach(
             section => section.classList.remove("active")
             )
-            
+
+            if(e.target.innerText == "home"){
+
+                renderRandomBeer()
+            }
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
         beerInfoPage.style.display = "none"
             
-
-
-            
     }
-    
     
     )
 }
@@ -111,3 +111,38 @@ for(let link of divLinks){
     }
     )
 }
+
+const inputField = document.querySelector(".beer-input")
+inputField.addEventListener("keyup", () =>{
+   
+    const search = inputField.value
+    showList(search)
+} )
+
+const ul = document.querySelector(".beer-suggestions")
+console.log(ul)
+
+async function showList(search){
+    const result = await getData()
+    
+    for (let i = 0; i < result.length; i++) {
+    
+        let suggestion = result[i].name
+        
+        if(suggestion.includes(search)){
+
+            const li = document.createElement("li")
+            ul.append(li)
+            li.innerHTML = suggestion
+            
+        }
+    }
+
+
+
+
+}
+
+
+
+
