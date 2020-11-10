@@ -40,6 +40,7 @@ h2 {
 
     /* color: var(--color-darkgrey) */
     color: var(--color-grey);
+    
 }
 
 
@@ -89,11 +90,16 @@ header {
     /* background-image: url("../images/beer.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
-    height: 300px;
+    height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url("../images/beerdog.gif");
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
 }
+
 
 
 
@@ -184,7 +190,7 @@ footer{
     height: 500px;
     width: 250px;
     background-color: white;
-    border-radius: 10px 10px 10px 10px;
+    border-radius: 5px 5px 5px 5px;
     grid-column: 1;
     box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
