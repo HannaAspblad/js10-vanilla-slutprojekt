@@ -11,32 +11,6 @@ async function getData() { //hämtar datan
     return data
 }
 
-
-// async function getSpecificBeer(input){
-
-//      const aBeer = await getData()
-
-//      for(i=0; i < aBeer.length; i++){
-//         console.log(aBeer[i].name)
-
-//         if(aBeer[i].name == input){
-
-
-//             renderBeerInfo()
-//         }
-
-//     } 
-
-// }
-
-// async function getSpecificBeer(input) {
-//     const beerdata  = "https://api.punkapi.com/v2/beers/" + "?beer_name=" + input
-//     const request = await fetch(beerdata) 
-//     const data = await request.json()
-    
-//     return data 
-// }
-
 async function getRandomBeer() {//hämtar datan med random beer
 
     const request = await fetch("https://api.punkapi.com/v2/beers/random")
@@ -48,7 +22,7 @@ async function getRandomBeer() {//hämtar datan med random beer
 
 // alla eventlisteners
 
-const navLinks = document.querySelectorAll("nav > a")
+const navLinks = document.querySelectorAll("nav > a") //hide specific beer info
 const beerInfoPage = document.querySelector(".info")
 
 for (let link of navLinks) {
@@ -153,7 +127,7 @@ async function renderRandomBeerInfo() { //renderar ut random beer
 
 }
 
-async function renderBeerInfo(inputBeer) { //renderar ut vald öl
+async function renderBeerInfo(inputBeer) { //renderar ut vald öl / //blir det inte en infinite loop?
 
     const beerTitle = document.querySelector(".chosen-beer-info .beer-name")
     const beerDesc = document.querySelector(".chosen-beer-info .description")
@@ -178,8 +152,7 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl
             foodPair.innerHTML = `${chosenBeer[i].food_pairing}`
             brewerTips.innerHTML = `${chosenBeer[i].brewers_tips}`
             beerImg.src = `${chosenBeer[i].image_url}`
-        }
-    
+        } 
     }
 
 }
@@ -190,8 +163,6 @@ function renderImageCard(beer) {//tar en öl som input och renderar ut bilden p�
 
     imageElement.src = `
 ${beer[0].image_url}`
-
-
 
 }
 
@@ -218,8 +189,6 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
         if (search.length == 0) {
             hideList()
         }
-
-
 
     }
 
