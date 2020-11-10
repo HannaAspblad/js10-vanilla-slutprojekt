@@ -1,3 +1,50 @@
+// fething data
+
+async function getData() { //hämtar datan
+
+    const request = await fetch("https://api.punkapi.com/v2/beers?per_page=80")
+    // const request1 = await fetch("https://api.punkapi.com/v2/beers?page=1&per_page=80")
+    // const request2 = await fetch("https://api.punkapi.com/v2/beers?page=2&per_page=80")
+
+    const data = await request.json()
+
+    return data
+}
+
+
+// async function getSpecificBeer(input){
+
+//      const aBeer = await getData()
+
+//      for(i=0; i < aBeer.length; i++){
+//         console.log(aBeer[i].name)
+
+//         if(aBeer[i].name == input){
+
+
+//             renderBeerInfo()
+//         }
+
+//     } 
+
+// }
+
+// async function getSpecificBeer(input) {
+//     const beerdata  = "https://api.punkapi.com/v2/beers/" + "?beer_name=" + input
+//     const request = await fetch(beerdata) 
+//     const data = await request.json()
+    
+//     return data 
+// }
+
+async function getRandomBeer() {//hämtar datan med random beer
+
+    const request = await fetch("https://api.punkapi.com/v2/beers/random")
+    const data = await request.json()
+
+    return data
+}
+
 
 // alla eventlisteners
 
@@ -11,7 +58,7 @@ for (let link of navLinks) {
         )
 
         if (e.target.innerText == "home") {
-            renderBeerInfo()
+            renderRandomBeerInfo()
         }
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
@@ -38,27 +85,34 @@ for (let link of divLinks) {
 
 const inputField = document.querySelector(".beer-input")
 
-inputField.addEventListener("keyup", () => {
-
-    const search = inputField.value
-    showSuggestions(search)
+inputField.addEventListener("keydown", (event) => {
+    if (event.key == "Enter") {
+        const search = inputField.value
+        showSuggestions(search)
+    } else {
+        return
+    }
 })
 
 const ul = document.querySelector(".beer-suggestions")
 const beerListContainer = document.querySelector(".beer-list")
 const listItem = document.querySelector(".beer-suggestions li")
+const specificBeerInfoPage = document.querySelector(".chosen-beer-info")
 
 ul.addEventListener("click", function (e) {
-    renderBeerInfo(e.target.innerText)
-    hideList()
+    let pickedBeer = e.target.innerText
+    //getSpecificBeer(pickedBeer)
+    specificBeerInfoPage.style.display = "block"
+    renderBeerInfo(pickedBeer)
+
 })
 
 const randomizeButton = document.querySelector(".randomize-button")
-    randomizeButton.addEventListener("click", function () {
+randomizeButton.addEventListener("click", function () {
 
-        renderBeerInfo()
-        beerInfoPage.style.display = "none"
-    })
+    renderRandomBeerInfo()
+    beerInfoPage.style.display = "none"
+})
 
 getData() //kallar på funktinen som hämtar datan
 
@@ -73,23 +127,8 @@ function showList() { //visar list-diven
     beerListContainer.style.display = "block"
 }
 
-async function getData() { //hämtar datan
 
-    const request = await fetch("https://api.punkapi.com/v2/beers?per_page=80") //tio per sida + variabel för att plussa på
-    const data = await request.json()
-
-    return data
-}
-
-async function getRandomBeer() {//hämtar datan med random beer
-
-    const request = await fetch("https://api.punkapi.com/v2/beers/random")
-    const data = await request.json()
-
-    return data
-}
-
-async function renderBeerInfo() { //ska ta en input så man kan skicka in både random och specifik öl
+async function renderRandomBeerInfo() { //renderar ut random beer
     const beerTitle = document.querySelector(".beer-name")
     const beerDesc = document.querySelector(".description")
     const alcoholVol = document.querySelector(".alcohol-by-volume")
@@ -101,7 +140,6 @@ async function renderBeerInfo() { //ska ta en input så man kan skicka in både 
 
     const randomBeer = await getRandomBeer()
 
-
     beerTitle.innerHTML = `${randomBeer[0].name}`
     beerDesc.innerHTML = `${randomBeer[0].description}`
     alcoholVol.innerHTML = `${randomBeer[0].volume.value}  ${randomBeer[0].volume.unit}`
@@ -111,11 +149,38 @@ async function renderBeerInfo() { //ska ta en input så man kan skicka in både 
     brewerTips.innerHTML = `${randomBeer[0].brewers_tips}`
     beerImg.src = `${randomBeer[0].image_url}`
 
-
-
-
-
     renderImageCard(randomBeer)
+
+}
+
+async function renderBeerInfo(inputBeer) { //renderar ut vald öl
+
+    const beerTitle = document.querySelector(".chosen-beer-info .beer-name")
+    const beerDesc = document.querySelector(".chosen-beer-info .description")
+    const alcoholVol = document.querySelector(".chosen-beer-info .alcohol-by-volume")
+    const beerIngr = document.querySelector(".chosen-beer-info .ingredients")
+    const beerHops = document.querySelector(".chosen-beer-info .hops")
+    const foodPair = document.querySelector(".chosen-beer-info .food-pairing")
+    const brewerTips = document.querySelector(".chosen-beer-info .brewers-tips")
+    const beerImg = document.querySelector(".chosen-beer-info .beer-info-img")
+
+    const chosenBeer = await getData()
+
+    for (i=0; i < chosenBeer.length; i++){
+
+        if (chosenBeer[i].name == inputBeer) {
+
+            beerTitle.innerHTML = `${chosenBeer[i].name}`
+            beerDesc.innerHTML = `${chosenBeer[i].description}`
+            alcoholVol.innerHTML = `${chosenBeer[i].volume.value}  ${chosenBeer[i].volume.unit}`
+            beerIngr.innerHTML = `${chosenBeer[i].ingredients.malt[name]}`
+            beerHops.innerHTML = `${chosenBeer[i].ingredients}`
+            foodPair.innerHTML = `${chosenBeer[i].food_pairing}`
+            brewerTips.innerHTML = `${chosenBeer[i].brewers_tips}`
+            beerImg.src = `${chosenBeer[i].image_url}`
+        }
+    
+    }
 
 }
 
@@ -131,7 +196,7 @@ ${beer[0].image_url}`
 }
 
 async function showSuggestions(search) {//visar en lista på öl som matchar ens sökning
-    const createdItems = ul.getElementsByTagName("li")
+    
     const result = await getData()
 
     hideList()
@@ -154,13 +219,10 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
             hideList()
         }
 
-        if (createdItems.length !== 0) {
-            showList()
 
-        } else {
-            hideList()
-        }
 
     }
 
 }
+
+
