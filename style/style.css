@@ -1,3 +1,7 @@
+*{
+    box-sizing: border-box;
+}
+
 
 /*-----------color variables-----------*/
 
@@ -21,7 +25,15 @@ body{
 
 h1{
     color: var(--color-whitesmoke);
-    font-size: 80px;
+    font-size: 193px;
+    font-family: 'Bebas Neue', cursive;
+    text-shadow:
+     3px  3px 0 #000,
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+
 }
 
 h2 {
@@ -93,8 +105,8 @@ section.active {
 
 .container {
     display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
 }
 
 .beer-card{
@@ -103,6 +115,7 @@ section.active {
     width: 250px;
     grid-column: 1;
     border-radius: 10px 10px 10px 10px;
+    margin-left: 10px;
     box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
 
@@ -114,11 +127,13 @@ section.active {
 
 .info{
     display: none;
-    grid-column: 2;
+    grid-area: 1 / 6 / 11 / 11;
     background-color: white;
     border-radius: 10px 10px 10px 10px;
+    margin-right: 10px;
     box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
+
 
 .randomize-button{
     box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -134,7 +149,8 @@ section.active {
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
-	text-shadow:0px 1px 0px #ffffff;
+    text-shadow:0px 1px 0px #ffffff;
+    margin-left: 10px;
 }
 
 .randomize-button:hover {
