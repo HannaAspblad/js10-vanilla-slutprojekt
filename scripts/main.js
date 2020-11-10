@@ -88,6 +88,23 @@ randomizeButton.addEventListener("click", function () {
     beerInfoPage.style.display = "none"
 })
 
+
+let currentPage = 1
+const displayedPage = document.querySelector(".current-page")
+displayedPage.innerHTML = currentPage
+const leftArrow = document.querySelector(".left-arrow")
+const rightArrow  = document.querySelector(".right-arrow")
+
+leftArrow.addEventListener("click", () =>{
+
+toPreviousPage()
+})
+
+rightArrow.addEventListener("click", () =>{
+
+    toNextPage()
+})
+
 getData() //kallar på funktinen som hämtar datan
 
 function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
@@ -194,4 +211,14 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
 
 }
 
+function toNextPage(){
+displayedPage.innerHTML= currentPage +=1
+}
 
+function toPreviousPage(){
+
+    if(currentPage >1){
+    displayedPage.innerHTML= currentPage -=1
+
+}
+}

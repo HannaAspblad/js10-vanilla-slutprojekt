@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,10 +7,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style/style.css">
 </head>
+
 <body>
 
     <header>
-        <h1>Punk IPA</h1>        
+        <h1>Punk IPA</h1>
     </header>
 
     <main>
@@ -23,12 +25,12 @@
             <h2>Random beer</h2>
             <button class="randomize-button">Slumpa bärs!</button>
             <div class="container">
-                
+
                 <div class="beer-card"><a href="#">info</a>
-                
-                <img src="" alt="beer">
+
+                    <img src="" alt="beer">
                 </div>
-                
+
 
                 <section class="info">
                     <h2 class="beer-name"></h2>
@@ -42,7 +44,7 @@
                         <li class="brewers-tips"></li>
                     </ul>
                     <img class="beer-info-img" src="">
-                
+
                 </section>
             </div>
 
@@ -52,35 +54,39 @@
             <h2>Search page</h2>
             <input type="text" class="beer-input">
             <div class="container">
-            <div class="beer-list">
-                <ul class="beer-suggestions"></ul>
-                <img src="images/baseline_arrow_left_black_18dp.png" class="left-arrow">
-                <p class="current-page"></p>
-                <img src="images/baseline_arrow_right_black_18dp.png" class="right-arrow">
+                <div class="beer-list">
+                    <ul class="beer-suggestions"></ul>
+
+                    <div class="pagination">
+                        <img src="images/baseline_arrow_left_black_18dp.png" class="left-arrow">
+                        <p class="current-page"></p>
+                        <img src="images/baseline_arrow_right_black_18dp.png" class="right-arrow">
+                    </div>
+                </div>
+                <section class="chosen-beer-info">
+                    <h2 class="beer-name"></h2>
+                    <ul class="info-list">
+                        <li class="description"></li>
+                        <li class="alcohol-by-volume"></li>
+                        <li class="volume"></li>
+                        <li class="ingredients"></li>
+                        <li class="hops"></li>
+                        <li class="food-pairing"></li>
+                        <li class="brewers-tips"></li>
+                    </ul>
+                    <img class="beer-info-img" src="">
+
+                </section>
             </div>
-            <section class="chosen-beer-info">
-                <h2 class="beer-name"></h2>
-                <ul class="info-list">
-                    <li class="description"></li>
-                    <li class="alcohol-by-volume"></li>
-                    <li class="volume"></li>
-                    <li class="ingredients"></li>
-                    <li class="hops"></li>
-                    <li class="food-pairing"></li>
-                    <li class="brewers-tips"></li>
-                </ul>
-                <img class="beer-info-img" src="">
-            
-            </section>
-        </div>
         </section>
 
-        
+
 
     </main>
 
     <footer></footer>
-    
+
     <script src="scripts/main.js"></script>
 </body>
+
 </html>
