@@ -22,7 +22,7 @@ async function getRandomBeer() {//hämtar datan med random beer
 
 // alla eventlisteners
 
-const navLinks = document.querySelectorAll("nav > a") //hide specific beer info
+const navLinks = document.querySelectorAll("nav > a")
 const beerInfoPage = document.querySelector(".info")
 
 for (let link of navLinks) {
@@ -38,6 +38,10 @@ for (let link of navLinks) {
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
         beerInfoPage.style.display = "none"
+        specificBeerInfoPage.style.display = "none"
+        hideList()
+        clearList()
+        clearInput()
     }
     )
 }
@@ -68,14 +72,18 @@ inputField.addEventListener("keydown", (event) => {
     }
 })
 
+    
+
 const ul = document.querySelector(".beer-suggestions")
 const beerListContainer = document.querySelector(".beer-list")
 const listItem = document.querySelector(".beer-suggestions li")
 const specificBeerInfoPage = document.querySelector(".chosen-beer-info")
+let numberOfItems = ul.getElementsByTagName(".beer-suggestions > li")
+
+
 
 ul.addEventListener("click", function (e) {
     let pickedBeer = e.target.innerText
-    //getSpecificBeer(pickedBeer)
     specificBeerInfoPage.style.display = "block"
     renderBeerInfo(pickedBeer)
 
@@ -97,7 +105,7 @@ const rightArrow  = document.querySelector(".right-arrow")
 
 leftArrow.addEventListener("click", () =>{
 
-toPreviousPage()
+    toPreviousPage()
 })
 
 rightArrow.addEventListener("click", () =>{
@@ -105,17 +113,28 @@ rightArrow.addEventListener("click", () =>{
     toNextPage()
 })
 
-getData() //kallar på funktinen som hämtar datan
+getData() //kallar på funktionen som hämtar datan
 
 function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
 
-    ul.innerHTML = ""
+    
     beerListContainer.style.display = "none"
+}
+
+function clearList(){
+
+    ul.innerHTML = ""
 }
 
 function showList() { //visar list-diven
 
     beerListContainer.style.display = "block"
+}
+
+function clearInput(){
+
+    inputField.value = ""
+
 }
 
 
@@ -186,21 +205,30 @@ ${beer[0].image_url}`
 async function showSuggestions(search) {//visar en lista på öl som matchar ens sökning
     
     const result = await getData()
-
-    hideList()
+    
+    clearList()
     showList()
 
+    
+    
     for (let i = 0; i < result.length; i++) {
 
         let suggestion = result[i].name
+        
 
         if (suggestion.toLowerCase().includes(search.toLowerCase())) {
 
+            
             const li = document.createElement("li")
             ul.append(li)
 
             li.innerHTML = suggestion
+            console.log(numberOfItems.length)
 
+//                 if(numberOfItems.length >4){
+
+// console.log("hejhej")
+//                 }
         }
 
         if (search.length == 0) {
@@ -211,14 +239,46 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
 
 }
 
+
+
 function toNextPage(){
 displayedPage.innerHTML= currentPage +=1
+clearList()
 }
 
 function toPreviousPage(){
 
     if(currentPage >1){
     displayedPage.innerHTML= currentPage -=1
+    clearList()
 
 }
 }
+
+
+
+
+
+//showOnlyTen()
+//function showOnlyTen(){
+
+
+
+// for(current of numberOfItems){
+
+//     console.log(current)
+
+    // if (current < 10){
+
+    //     // const li = document.createElement("li")
+    //     //         ul.append(li)
+    
+    //     //         li.innerHTML = suggestion
+
+        
+    // }
+
+// }
+
+
+//}
