@@ -1,3 +1,5 @@
+renderRandomBeerInfo()
+
 // fething data
 
 async function getData() { //hämtar datan
@@ -40,7 +42,7 @@ for (let link of navLinks) {
 
         hideBeerInfoPage(beerInfoPage)
         hideBeerInfoPage(specificBeerInfoPage)
-        
+
         hideList()
         clearList()
         clearInput()
@@ -74,7 +76,7 @@ inputField.addEventListener("keydown", (event) => {
     }
 })
 
-    
+
 
 const ul = document.querySelector(".beer-suggestions")
 const beerListContainer = document.querySelector(".beer-list")
@@ -95,7 +97,7 @@ randomizeButton.addEventListener("click", function () {
 
     renderRandomBeerInfo()
     hideBeerInfoPage(beerInfoPage)
-    
+
 })
 
 
@@ -103,16 +105,17 @@ let currentPage = 1
 const displayedPage = document.querySelector(".current-page")
 displayedPage.innerHTML = currentPage
 const leftArrow = document.querySelector(".left-arrow")
-const rightArrow  = document.querySelector(".right-arrow")
+const rightArrow = document.querySelector(".right-arrow")
 
-leftArrow.addEventListener("click", () =>{
+leftArrow.addEventListener("click", () => {
 
     toPreviousPage()
 })
 
-rightArrow.addEventListener("click", () =>{
+rightArrow.addEventListener("click", () => {
 
     toNextPage()
+
 })
 
 getData() //kallar på funktionen som hämtar datan
@@ -121,11 +124,11 @@ getData() //kallar på funktionen som hämtar datan
 
 function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
 
-    
+
     beerListContainer.style.display = "none"
 }
 
-function clearList(){
+function clearList() {
 
     ul.innerHTML = ""
 }
@@ -135,19 +138,19 @@ function showList() { //visar list-diven
     beerListContainer.style.display = "block"
 }
 
-function clearInput(){
+function clearInput() {
 
     inputField.value = ""
 
 }
 
-function hideBeerInfoPage(page){
+function hideBeerInfoPage(page) {
 
     page.style.display = "none"
 
 }
 
-function showBeerInfoPage(page){
+function showBeerInfoPage(page) {
 
     page.style.display = "block"
 }
@@ -166,12 +169,21 @@ async function renderRandomBeerInfo() { //renderar ut random beer
 
     beerTitle.innerHTML = `${randomBeer[0].name}`
     beerDesc.innerHTML = `${randomBeer[0].description}`
-    alcoholVol.innerHTML = `${randomBeer[0].volume.value}  ${randomBeer[0].volume.unit}`
-    beerIngr.innerHTML = `${randomBeer[0].ingredients.malt[name]}`
-    beerHops.innerHTML = `${randomBeer[0].ingredients}`
+    alcoholVol.innerHTML = `${randomBeer[0].volume.value} ${randomBeer[0].volume.unit}`
+    beerIngr.innerHTML = `${randomBeer[0].ingredients.malt[0].name} ${randomBeer[0].ingredients.malt[0].amount.value} ${randomBeer[0].ingredients.malt[0].amount.unit}`
+    beerHops.innerHTML = `${randomBeer[0].ingredients.hops[0].name} ${randomBeer[0].ingredients.hops[0].amount.value} ${randomBeer[0].ingredients.hops[0].amount.unit}`
     foodPair.innerHTML = `${randomBeer[0].food_pairing}`
     brewerTips.innerHTML = `${randomBeer[0].brewers_tips}`
     beerImg.src = `${randomBeer[0].image_url}`
+
+    if (randomBeer[0].image_url == null) {
+
+        beerImg.src = "images/defaultimg.jpg"
+
+    } else {
+
+        beerImg.src = `${randomBeer[0].image_url}`
+    }
 
     renderImageCard(randomBeer)
 
@@ -190,19 +202,30 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl / //blir det i
 
     const chosenBeer = await getData()
 
-    for (i=0; i < chosenBeer.length; i++){
+    for (i = 0; i < chosenBeer.length; i++) {
 
         if (chosenBeer[i].name == inputBeer) {
 
             beerTitle.innerHTML = `${chosenBeer[i].name}`
             beerDesc.innerHTML = `${chosenBeer[i].description}`
             alcoholVol.innerHTML = `${chosenBeer[i].volume.value}  ${chosenBeer[i].volume.unit}`
-            beerIngr.innerHTML = `${chosenBeer[i].ingredients.malt[name]}`
-            beerHops.innerHTML = `${chosenBeer[i].ingredients}`
+            beerIngr.innerHTML = `${chosenBeer[i].ingredients.malt[0].name} ${chosenBeer[i].ingredients.malt[0].amount.value} ${chosenBeer[i].ingredients.malt[0].amount.unit}`
+            beerHops.innerHTML = `${chosenBeer[i].ingredients.hops[0].name} ${chosenBeer[i].ingredients.hops[0].amount.value} ${chosenBeer[i].ingredients.hops[0].amount.unit}`
             foodPair.innerHTML = `${chosenBeer[i].food_pairing}`
             brewerTips.innerHTML = `${chosenBeer[i].brewers_tips}`
             beerImg.src = `${chosenBeer[i].image_url}`
-        } 
+
+
+            if (chosenBeer[i].image_url == null) {
+
+                beerImg.src = "images/defaultimg.jpg"
+
+            } else {
+
+                beerImg.src = `${chosenBeer[i].image_url}`
+            }
+
+        }
     }
 
 }
@@ -211,35 +234,44 @@ function renderImageCard(beer) {//tar en öl som input och renderar ut bilden p�
 
     const imageElement = document.querySelector("img")
 
-    imageElement.src = `
-${beer[0].image_url}`
+    if (beer[0].image_url == null) {
+
+        imageElement.src = "images/defaultimg.jpg"
+
+    } else {
+
+        imageElement.src = `${beer[0].image_url}`
+    }
 
 }
 
 async function showSuggestions(search) {//visar en lista på öl som matchar ens sökning
-    
+
+    let allSuggestions = []
+
     const result = await getData()
-    
+
     clearList()
     showList()
 
-    
+
     for (let i = 0; i < result.length; i++) {
 
         let suggestion = result[i].name
-        
 
         if (suggestion.toLowerCase().includes(search.toLowerCase())) {
 
-            
-            const li = document.createElement("li")
-            ul.append(li)
+            //        const li = document.createElement("li")
+            //    ul.append(li)
 
-            li.innerHTML = suggestion
+            //    li.innerHTML = suggestion 
 
-            countElements()
-            
+            allSuggestions.push(suggestion)
+
+            divideSuggestions(allSuggestions)
+
         }
+
 
         if (search.length == 0) {
             hideList()
@@ -250,52 +282,34 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
 }
 
 
+function divideSuggestions(input) {
 
-function toNextPage(){
-displayedPage.innerHTML= currentPage +=1
-clearList()
+    let currentPageContent = [input[0], input[1], input[2], input[3], input[4],
+    input[5], input[6], input[7], input[8], input[9]]
+
+    // const li = document.createElement("li")
+    // ul.append(li)
+    //ul.innerHTML = currentPageContent[0]
+
+    console.log(currentPageContent)
+    ul.innerHTML = currentPageContent
+
 }
 
-function toPreviousPage(){
 
-    if(currentPage >1){
-    displayedPage.innerHTML= currentPage -=1
+function toNextPage() {
+    displayedPage.innerHTML = currentPage += 1
     clearList()
 
-}
-}
-
-
-
-
-
-//showOnlyTen()
-//function showOnlyTen(){
-
-
-
-// for(current of numberOfItems){
-
-//     console.log(current)
-
-    // if (current < 10){
-
-    //     // const li = document.createElement("li")
-    //     //         ul.append(li)
-    
-    //     //         li.innerHTML = suggestion
-
-        
-    // }
-
-// }
-
-
-//}
-
-function countElements(){
-var count = ul.childElementCount;
-
-console.log(count)
 
 }
+
+function toPreviousPage() {
+
+    if (currentPage > 1) {
+        displayedPage.innerHTML = currentPage -= 1
+        clearList()
+
+    }
+}
+
