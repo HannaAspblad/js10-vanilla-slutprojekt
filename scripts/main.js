@@ -37,8 +37,10 @@ for (let link of navLinks) {
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
-        beerInfoPage.style.display = "none"
-        specificBeerInfoPage.style.display = "none"
+
+        hideBeerInfoPage(beerInfoPage)
+        hideBeerInfoPage(specificBeerInfoPage)
+        
         hideList()
         clearList()
         clearInput()
@@ -56,7 +58,7 @@ for (let link of divLinks) {
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
-        beerInfoPage.style.display = "block"
+        showBeerInfoPage(beerInfoPage)
     }
     )
 }
@@ -78,13 +80,12 @@ const ul = document.querySelector(".beer-suggestions")
 const beerListContainer = document.querySelector(".beer-list")
 const listItem = document.querySelector(".beer-suggestions li")
 const specificBeerInfoPage = document.querySelector(".chosen-beer-info")
-let numberOfItems = ul.getElementsByTagName(".beer-suggestions > li")
 
 
 
 ul.addEventListener("click", function (e) {
     let pickedBeer = e.target.innerText
-    specificBeerInfoPage.style.display = "block"
+    showBeerInfoPage(specificBeerInfoPage)
     renderBeerInfo(pickedBeer)
 
 })
@@ -93,7 +94,8 @@ const randomizeButton = document.querySelector(".randomize-button")
 randomizeButton.addEventListener("click", function () {
 
     renderRandomBeerInfo()
-    beerInfoPage.style.display = "none"
+    hideBeerInfoPage(beerInfoPage)
+    
 })
 
 
@@ -114,6 +116,8 @@ rightArrow.addEventListener("click", () =>{
 })
 
 getData() //kallar på funktionen som hämtar datan
+
+
 
 function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
 
@@ -137,6 +141,16 @@ function clearInput(){
 
 }
 
+function hideBeerInfoPage(page){
+
+    page.style.display = "none"
+
+}
+
+function showBeerInfoPage(page){
+
+    page.style.display = "block"
+}
 
 async function renderRandomBeerInfo() { //renderar ut random beer
     const beerTitle = document.querySelector(".beer-name")
@@ -210,7 +224,6 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
     showList()
 
     
-    
     for (let i = 0; i < result.length; i++) {
 
         let suggestion = result[i].name
@@ -223,12 +236,9 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
             ul.append(li)
 
             li.innerHTML = suggestion
-            console.log(numberOfItems.length)
 
-//                 if(numberOfItems.length >4){
-
-// console.log("hejhej")
-//                 }
+            countElements()
+            
         }
 
         if (search.length == 0) {
@@ -282,3 +292,10 @@ function toPreviousPage(){
 
 
 //}
+
+function countElements(){
+var count = ul.childElementCount;
+
+console.log(count)
+
+}
