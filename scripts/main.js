@@ -261,14 +261,7 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
 
         if (suggestion.toLowerCase().includes(search.toLowerCase())) {
 
-            //        const li = document.createElement("li")
-            //    ul.append(li)
-
-            //    li.innerHTML = suggestion 
-
             allSuggestions.push(suggestion)
-
-            divideSuggestions(allSuggestions)
 
         }
 
@@ -277,7 +270,7 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
             hideList()
         }
 
-    }
+    } divideSuggestions(allSuggestions)
 
 }
 
@@ -287,12 +280,13 @@ function divideSuggestions(input) {
     let currentPageContent = [input[0], input[1], input[2], input[3], input[4],
     input[5], input[6], input[7], input[8], input[9]]
 
-    // const li = document.createElement("li")
-    // ul.append(li)
-    //ul.innerHTML = currentPageContent[0]
+    currentPageContent.forEach(function(item){
 
-    console.log(currentPageContent)
-    ul.innerHTML = currentPageContent
+    const li = document.createElement("li")
+    ul.append(li)
+    li.innerHTML = item
+
+})
 
 }
 
