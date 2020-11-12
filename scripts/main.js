@@ -6,13 +6,13 @@ renderRandomBeerInfo()
 
 // fething data
 
-async function getData(beerNameRequest) { //hämtar datan
+async function getData(page, beerNameRequest) { //hämtar datan
 
-    const request = await fetch("https://api.punkapi.com/v2/beers?beer_name=" + beerNameRequest+"&?page=" +currentPage+"&per_page=10")
-//const request = await fetch("https://api.punkapi.com/v2/beers?page="+currentPage+"&per_page=10&?beer_name="+beerNameRequest)
-//const request = await fetch("https://api.punkapi.com/v2/beers?per_page=10&?page=" + currentPage + "&?beer_name=" + beerNameRequest)
+
+   const request = await fetch("https://api.punkapi.com/v2/beers?page="+page+"&per_page=10&beer_name="+beerNameRequest)
+
     const data = await request.json()
-
+console.log(data)
     return data
 }
 
@@ -38,17 +38,19 @@ for (let link of navLinks) {
 
         if (e.target.innerText == "home") {
             renderRandomBeerInfo()
+            
         }
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
-
+        resetPages()
         hideBeerInfoPage(beerInfoPage)
         hideBeerInfoPage(specificBeerInfoPage)
 
         hideList()
         clearList()
         clearInput()
+        
     }
     )
 }
@@ -74,6 +76,7 @@ inputField.addEventListener("keydown", (event) => {
     if (event.key == "Enter") {
         search = inputField.value
         showSuggestions(search)
+        
     } else {
         return
     }
@@ -106,7 +109,7 @@ randomizeButton.addEventListener("click", function () {
 
 
 
-getData() //kallar på funktionen som hämtar datan
+//getData() //kallar på funktionen som hämtar datan
 
 
 function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
@@ -187,7 +190,7 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl
     const brewerTips = document.querySelector(".chosen-beer-info .brewers-tips")
     const beerImg = document.querySelector(".chosen-beer-info .beer-info-img")
 
-    const chosenBeer = await getData(inputBeer)
+    const chosenBeer = await getData(1,inputBeer)
 
     for (i = 0; i < chosenBeer.length; i++) {
 
@@ -240,19 +243,20 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
 
 
     clearList()
+    
 
     //let allSuggestions = []
     let result
-    
 
     if (search.length >= 3) {
-        result = await getData(search)
+        result = await getData(currentPage, search)
         showList()
         hideErrorMsg()
     }
     else {
         hideList()
         showErrorMsg()
+        
         return
     }
 
@@ -264,7 +268,7 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
     //         allSuggestions.push(suggestion)
     //     }
         
-
+    
     divideSuggestions(result)
     countElements(search)
 }
@@ -322,9 +326,8 @@ function countElements(search) {
 }
 
 
-pagination()
 
-function pagination(){
+
 
     const displayedPage = document.querySelector(".current-page")
     displayedPage.innerHTML = currentPage
@@ -346,6 +349,11 @@ function pagination(){
         showSuggestions(search)
         
     })
+
+
+function resetPages(){
+
+currentPage = 1
+displayedPage.innerHTML = currentPage
+
 }
-
-
