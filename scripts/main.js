@@ -1,13 +1,12 @@
+
+
 renderRandomBeerInfo()
 
 // fething data
 
-async function getData() { //hämtar datan
-
-    const request = await fetch("https://api.punkapi.com/v2/beers?per_page=80")
-    // const request1 = await fetch("https://api.punkapi.com/v2/beers?page=1&per_page=80")
-    // const request2 = await fetch("https://api.punkapi.com/v2/beers?page=2&per_page=80")
-
+async function getData(beerNameRequest) { //hämtar datan
+console.log(beerNameRequest)
+    const request = await fetch("https://api.punkapi.com/v2/beers/?beer_name=" + beerNameRequest)
     const data = await request.json()
 
     return data
@@ -245,34 +244,66 @@ function renderImageCard(beer) {//tar en öl som input och renderar ut bilden p�
 
 }
 
+
+
+const errorMsg = document.querySelector(".error-mess")
+
 async function showSuggestions(search) {//visar en lista på öl som matchar ens sökning
 
+    let result 
+    let suggestion
     let allSuggestions = []
 
-    const result = await getData()
+    if (search.length > 3){
+
+        result = await getData(search)
+
+    }
 
     clearList()
     showList()
 
 
-    for (let i = 0; i < result.length; i++) {
+    
 
-        let suggestion = result[i].name
-
+        suggestion = result[i].name
+       
         if (suggestion.toLowerCase().includes(search.toLowerCase())) {
 
             allSuggestions.push(suggestion)
-
         }
 
-
-        if (search.length == 0) {
+        
+        if (search.length < 3) {
             hideList()
+            showErrorMsg()
+
+        } else {
+            hideErrorMsg()
         }
+        
+    
 
-    } divideSuggestions(allSuggestions)
 
+    divideSuggestions(allSuggestions)
+    countElements(search)
 }
+
+function invalidBeer() {
+    
+    errorMsg.innerHTML = "Ölen finns inte"
+}
+
+function showErrorMsg() {
+
+    errorMsg.innerHTML = "Du måste ha minst tre bokstäver"
+}
+
+function hideErrorMsg() {
+
+    errorMsg.innerHTML = ""
+}
+
 
 
 function divideSuggestions(input) {
@@ -280,13 +311,40 @@ function divideSuggestions(input) {
     let currentPageContent = [input[0], input[1], input[2], input[3], input[4],
     input[5], input[6], input[7], input[8], input[9]]
 
-    currentPageContent.forEach(function(item){
+    currentPageContent.forEach(function (item) {
 
-    const li = document.createElement("li")
-    ul.append(li)
-    li.innerHTML = item
+        if (item != undefined) {
 
-})
+            const li = document.createElement("li")
+            ul.append(li)
+            li.innerHTML = item
+
+            return
+        }
+    })
+
+}
+
+
+
+function countElements(search){
+    var count = ul.childElementCount;
+    console.log(count)
+    
+    if (count < 1 && search.length >= 3){
+
+        invalidBeer()
+        hideList()  
+    }
+
+    }
+
+
+
+function changePage() {
+
+    arrowleft.addEventListener("click")
+
 
 }
 
