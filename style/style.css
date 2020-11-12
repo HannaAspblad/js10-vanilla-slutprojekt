@@ -37,8 +37,6 @@ h1{
 }
 
 h2 {
-
-    /* color: var(--color-darkgrey) */
     color: var(--color-grey);
     font-size: 30px;
     text-align: center;
@@ -51,23 +49,18 @@ p {
 
 
 
-
-
-
 /*-----------nav bar-----------*/
 
 nav{
     display: flex;
     align-items: center;
-    /* background-color: var(--color-darkgrey); */
     background-color: #DCDCDC;
-    height: 0px;
+    height: 30px;
     justify-content: center;
 }
 
 nav a {
 text-decoration: none;
-/* color: var(--color-whitesmoke); */
 color: black;
 padding: 0 10px;
 
@@ -76,14 +69,12 @@ padding: 0 10px;
 nav a:visited{
 
 text-decoration: none;   
-/* color: var(--color-whitesmoke); */
 color: var(--color-grey);
 }
 
 nav a:hover{
 
     text-decoration: none;
-    /* color: var(--color-grey); */
     color: var(--color-whitesmoke);
 }
 
@@ -93,7 +84,6 @@ nav a:hover{
 
 
 header {
-    /* background-image: url("../images/beer.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
     height: 350px;
@@ -122,18 +112,22 @@ section.active {
 }
 
 .container {
-    display: grid;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
-    grid-template-rows: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    /* display: grid;
+    grid-template-columns: 50% 50%; */
+
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+
 }
 
 .beer-card{
     background-color:#F5F5F5;
-    height: 500px;
+    height: 520px;
     width: 250px;
     grid-column: 1;
     border-radius: 5px 5px 5px 5px;
-    margin-left: 10px;
+    margin: auto;
     box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
 }
 
@@ -145,11 +139,13 @@ section.active {
 
 .info{
     display: none;
-    grid-area: 1 / 6 / 11 / 11;
     background-color: #F5F5F5;
     border-radius: 5px 5px 5px 5px;
-    margin-right: 10px;
+    margin: auto;
     box-shadow: 5px 5px 5px var(--color-darkgrey-transparent);
+    height: 520px;
+    width: 550px;
+
 }
 
 
@@ -194,7 +190,7 @@ footer{
 
 .beer-list{
     display: none;
-    height: 500px;
+    height: 400px;
     width: 250px;
     background-color: white;
     border-radius: 5px 5px 5px 5px;
@@ -232,7 +228,13 @@ max-height: 200px;
 
 .pagination {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+}
+
+.left-arrow{
+
+}
+
+.right-arrow{
+
 }
