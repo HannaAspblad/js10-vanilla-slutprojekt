@@ -178,7 +178,7 @@ async function renderRandomBeerInfo() { //renderar ut random beer
 
     if (randomBeer[0].image_url == null) {
 
-        beerImg.src = "images/defaultimg.jpg"
+        beerImg.src = "images/ipaglass.png"
 
     } else {
 
@@ -218,7 +218,7 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl / //blir det i
 
             if (chosenBeer[i].image_url == null) {
 
-                beerImg.src = "images/defaultimg.jpg"
+                beerImg.src = "images/ipaglass.png"
 
             } else {
 
@@ -236,7 +236,7 @@ function renderImageCard(beer) {//tar en öl som input och renderar ut bilden p�
 
     if (beer[0].image_url == null) {
 
-        imageElement.src = "images/defaultimg.jpg"
+        imageElement.src = "images/ipaglass.png"
 
     } else {
 
