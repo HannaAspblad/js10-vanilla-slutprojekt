@@ -75,6 +75,7 @@ const inputField = document.querySelector(".beer-input")
 inputField.addEventListener("keydown", (event) => {
     if (event.key == "Enter") {
         search = inputField.value
+        resetPages()
         showSuggestions(search)
         
     } else {
@@ -322,6 +323,20 @@ function countElements(search) {
 
         invalidBeer()
         hideList()
+    }
+
+    if (currentPage == 1){
+
+        leftArrow.style.display = "none"
+    }else {
+        leftArrow.style.display = "block"
+    }
+
+    if (count < 10){
+
+        rightArrow.style.display = "none"
+    }else {
+        rightArrow.style.display = "block"
     }
 }
 
