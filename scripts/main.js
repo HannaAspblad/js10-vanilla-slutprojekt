@@ -1,15 +1,16 @@
 let currentPage = 1
 let search
 
+
 renderRandomBeerInfo()
 
 // fething data
 
 async function getData(beerNameRequest) { //hämtar datan
 
-const request = await fetch("https://api.punkapi.com/v2/beers?page="+currentPage+"&per_page=10&?beer_name="+beerNameRequest)
-
-   // const request = await fetch("https://api.punkapi.com/v2/beers?per_page=10&?page=" + currentPage + "&?beer_name=" + beerNameRequest)
+    const request = await fetch("https://api.punkapi.com/v2/beers?beer_name=" + beerNameRequest+"&?page=" +currentPage+"&per_page=10")
+//const request = await fetch("https://api.punkapi.com/v2/beers?page="+currentPage+"&per_page=10&?beer_name="+beerNameRequest)
+//const request = await fetch("https://api.punkapi.com/v2/beers?per_page=10&?page=" + currentPage + "&?beer_name=" + beerNameRequest)
     const data = await request.json()
 
     return data
