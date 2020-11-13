@@ -180,7 +180,8 @@ async function renderRandomBeerInfo() { //renderar ut den detaljerade infon om r
 
     const beerTitle = document.querySelector(".beer-name")
     const beerDesc = document.querySelector(".description")
-    const alcoholVol = document.querySelector(".alcohol-by-volume")
+    const abv = document.querySelector(".alcohol-by-volume")
+    const beerVolume = document.querySelector(".volume")
     const beerIngr = document.querySelector(".ingredients")
     const beerHops = document.querySelector(".hops")
     const foodPair = document.querySelector(".food-pairing")
@@ -191,11 +192,12 @@ async function renderRandomBeerInfo() { //renderar ut den detaljerade infon om r
 
     beerTitle.innerHTML = `${randomBeer[0].name}`
     beerDesc.innerHTML = `${randomBeer[0].description}`
-    alcoholVol.innerHTML = `${randomBeer[0].volume.value} ${randomBeer[0].volume.unit}`
-    beerIngr.innerHTML = `${randomBeer[0].ingredients.malt[0].name} ${randomBeer[0].ingredients.malt[0].amount.value} ${randomBeer[0].ingredients.malt[0].amount.unit}`
-    beerHops.innerHTML = `${randomBeer[0].ingredients.hops[0].name} ${randomBeer[0].ingredients.hops[0].amount.value} ${randomBeer[0].ingredients.hops[0].amount.unit}`
-    foodPair.innerHTML = `${randomBeer[0].food_pairing}`
-    brewerTips.innerHTML = `${randomBeer[0].brewers_tips}`
+    abv.innerHTML = "Alcohol by volume: " + `${randomBeer[0].abv}`
+    beerVolume.innerHTML = "Beer volume: " + `${randomBeer[0].volume.value} ${randomBeer[0].volume.unit}`
+    beerIngr.innerHTML = "Ingredience: " + `${randomBeer[0].ingredients.malt[0].name} ${randomBeer[0].ingredients.malt[0].amount.value} ${randomBeer[0].ingredients.malt[0].amount.unit}`
+    beerHops.innerHTML = "Beeer hops: " + `${randomBeer[0].ingredients.hops[0].name} ${randomBeer[0].ingredients.hops[0].amount.value} ${randomBeer[0].ingredients.hops[0].amount.unit}`
+    foodPair.innerHTML = "Food pairing: " + `${randomBeer[0].food_pairing}`
+    brewerTips.innerHTML = "Brewer's tips: " +`${randomBeer[0].brewers_tips}`
     beerImg.src = `${randomBeer[0].image_url}`
 
     if (randomBeer[0].image_url == null) {
@@ -214,7 +216,8 @@ async function renderBeerInfo(inputBeer) { //renderar ut den detaljerade infon o
 
     const beerTitle = document.querySelector(".chosen-beer-info .beer-name")
     const beerDesc = document.querySelector(".chosen-beer-info .description")
-    const alcoholVol = document.querySelector(".chosen-beer-info .alcohol-by-volume")
+    const abv = document.querySelector(".chosen-beer-info .alcohol-by-volume")
+    const beerVolume = document.querySelector(".chosen-beer-info .volume")
     const beerIngr = document.querySelector(".chosen-beer-info .ingredients")
     const beerHops = document.querySelector(".chosen-beer-info .hops")
     const foodPair = document.querySelector(".chosen-beer-info .food-pairing")
@@ -229,11 +232,12 @@ async function renderBeerInfo(inputBeer) { //renderar ut den detaljerade infon o
 
             beerTitle.innerHTML = `${chosenBeer[i].name}`
             beerDesc.innerHTML = `${chosenBeer[i].description}`
-            alcoholVol.innerHTML = `${chosenBeer[i].volume.value}  ${chosenBeer[i].volume.unit}`
-            beerIngr.innerHTML = `${chosenBeer[i].ingredients.malt[0].name} ${chosenBeer[i].ingredients.malt[0].amount.value} ${chosenBeer[i].ingredients.malt[0].amount.unit}`
-            beerHops.innerHTML = `${chosenBeer[i].ingredients.hops[0].name} ${chosenBeer[i].ingredients.hops[0].amount.value} ${chosenBeer[i].ingredients.hops[0].amount.unit}`
-            foodPair.innerHTML = `${chosenBeer[i].food_pairing}`
-            brewerTips.innerHTML = `${chosenBeer[i].brewers_tips}`
+            abv.innerHTML = "Alcohol by volume: " + `${chosenBeer[i].abv}`
+            beerVolume.innerHTML = "Beer volume: " + `${chosenBeer[i].volume.value}  ${chosenBeer[i].volume.unit}`
+            beerIngr.innerHTML = "Ingredience: " + `${chosenBeer[i].ingredients.malt[0].name} ${chosenBeer[i].ingredients.malt[0].amount.value} ${chosenBeer[i].ingredients.malt[0].amount.unit}`
+            beerHops.innerHTML = "Beer hops: " + `${chosenBeer[i].ingredients.hops[0].name} ${chosenBeer[i].ingredients.hops[0].amount.value} ${chosenBeer[i].ingredients.hops[0].amount.unit}`
+            foodPair.innerHTML = "Food pair: " + `${chosenBeer[i].food_pairing}`
+            brewerTips.innerHTML = "Brewer's tips: " + `${chosenBeer[i].brewers_tips}`
             beerImg.src = `${chosenBeer[i].image_url}`
 
             if (chosenBeer[i].image_url == null) {
