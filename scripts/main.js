@@ -54,6 +54,7 @@ for (let link of navLinks) { // länkarna i nav bar
         const section = document.querySelector("." + link.innerText.toLowerCase())
         section.classList.add("active")
         resetPages()
+        hideErrorMsg()
         hideBeerInfoPage(beerInfoPage)
         hideBeerInfoPage(specificBeerInfoPage)
 
