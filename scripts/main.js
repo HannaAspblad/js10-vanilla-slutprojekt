@@ -311,6 +311,7 @@ function countElements(search) { // räknar antal objekt i listan och bestämmer
     if (count < 1 && search.length >= 3) {
 
         invalidBeer()
+        hideBeerInfoPage(specificBeerInfoPage)
         hideList()
     }
 
