@@ -281,8 +281,9 @@ async function getSuggestions(search) { // tar input från sökfältet och hämt
         hideErrorMsg()
     }
     else {
-        hideList()
+        
         showErrorMsg()
+        hideList()
 
         return
     }
