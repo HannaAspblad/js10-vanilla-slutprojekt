@@ -83,6 +83,7 @@ inputField.addEventListener("keydown", (event) => { //input-fältet
         search = inputField.value
         resetPages()
         getSuggestions(search)
+        hideBeerInfoPage(specificBeerInfoPage)
 
     } else {
         return
