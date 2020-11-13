@@ -6,7 +6,8 @@
     --color-whitesmoke: whitesmoke;
     --color-darkgrey: rgb(53, 53, 53);
     --color-grey: grey;
-    --color-darkgrey-transparent: rgba(53, 53, 53, 0.425);    
+    --color-darkgrey-transparent: rgba(53, 53, 53, 0.425);  
+    --color-black: black;  
 }
 
 body{
@@ -40,6 +41,11 @@ h2{
 p{
     padding-left: 10px;
     padding-right: 10px;;
+}
+
+a, a:visited, a:hover{
+    text-decoration: none;
+    color: var(--color-black);
 }
 
 /* ---------------- header ---------------- */
