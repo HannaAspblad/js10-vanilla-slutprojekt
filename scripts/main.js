@@ -1,18 +1,33 @@
+renderRandomBeerInfo() // anropas så man får en random öl direkt när man kommer in på sidan
+
+// globala variabler
+
 let currentPage = 1
 let search
 
+// query selectors
 
-renderRandomBeerInfo()
+const navLinks = document.querySelectorAll("nav > a")
+const beerInfoPage = document.querySelector(".info")
+const divLinks = document.querySelectorAll("div > a")
+const inputField = document.querySelector(".beer-input")
+const ul = document.querySelector(".beer-suggestions")
+const beerListContainer = document.querySelector(".beer-list")
+const listItem = document.querySelector(".beer-suggestions li")
+const specificBeerInfoPage = document.querySelector(".chosen-beer-info")
+const randomizeButton = document.querySelector(".randomize-button")
+const errorMsg = document.querySelector(".error-mess")
+const displayedPage = document.querySelector(".current-page")
+const leftArrow = document.querySelector(".left-arrow")
+const rightArrow = document.querySelector(".right-arrow")
 
 // fething data
 
 async function getData(page, beerNameRequest) { //hämtar datan
 
-
-   const request = await fetch("https://api.punkapi.com/v2/beers?page="+page+"&per_page=10&beer_name="+beerNameRequest)
-
+    const request = await fetch("https://api.punkapi.com/v2/beers?page=" + page + "&per_page=10&beer_name=" + beerNameRequest)
     const data = await request.json()
-console.log(data)
+
     return data
 }
 
@@ -24,13 +39,9 @@ async function getRandomBeer() {//hämtar datan med random beer
     return data
 }
 
+// eventlisteners
 
-// alla eventlisteners
-
-const navLinks = document.querySelectorAll("nav > a")
-const beerInfoPage = document.querySelector(".info")
-
-for (let link of navLinks) {
+for (let link of navLinks) { // länkarna i nav bar
     link.addEventListener("click", (e) => {
         document.querySelectorAll("main > section").forEach(
             section => section.classList.remove("active")
@@ -38,7 +49,6 @@ for (let link of navLinks) {
 
         if (e.target.innerText == "home") {
             renderRandomBeerInfo()
-            
         }
 
         const section = document.querySelector("." + link.innerText.toLowerCase())
@@ -50,14 +60,11 @@ for (let link of navLinks) {
         hideList()
         clearList()
         clearInput()
-        
     }
     )
 }
 
-const divLinks = document.querySelectorAll("div > a")
-
-for (let link of divLinks) {
+for (let link of divLinks) { //länkarna i divar
     link.addEventListener("click", () => {
         document.querySelectorAll("main > .info").forEach(
             section => section.classList.remove("active")
@@ -70,36 +77,27 @@ for (let link of divLinks) {
     )
 }
 
-const inputField = document.querySelector(".beer-input")
-
-inputField.addEventListener("keydown", (event) => {
+inputField.addEventListener("keydown", (event) => { //input-fältet
     if (event.key == "Enter") {
         search = inputField.value
         resetPages()
-        showSuggestions(search)
-        
+        getSuggestions(search)
+
     } else {
         return
     }
 })
 
 
+ul.addEventListener("click", function (e) { // list-objekten
 
-const ul = document.querySelector(".beer-suggestions")
-const beerListContainer = document.querySelector(".beer-list")
-const listItem = document.querySelector(".beer-suggestions li")
-const specificBeerInfoPage = document.querySelector(".chosen-beer-info")
-
-
-
-ul.addEventListener("click", function (e) {
     let pickedBeer = e.target.innerText
     showBeerInfoPage(specificBeerInfoPage)
     renderBeerInfo(pickedBeer)
 })
 
-const randomizeButton = document.querySelector(".randomize-button")
-randomizeButton.addEventListener("click", function () {
+
+randomizeButton.addEventListener("click", function () { // knappen för att visa random öl
 
     renderRandomBeerInfo()
     hideBeerInfoPage(beerInfoPage)
@@ -107,45 +105,79 @@ randomizeButton.addEventListener("click", function () {
 })
 
 
+leftArrow.addEventListener("click", () => { // vänstra pilen i pagineringen
+
+    if (currentPage > 1) {
+
+        displayedPage.innerHTML = currentPage -= 1
+        getSuggestions(search)
+    }
+})
 
 
+rightArrow.addEventListener("click", () => { // högra pilen i pagineringen
 
-//getData() //kallar på funktionen som hämtar datan
+    displayedPage.innerHTML = currentPage += 1
+    getSuggestions(search)
+
+})
 
 
-function hideList() { //tar bort li-elementen från ul och gömmer hela list-diven
+//en maaassa funktioner
 
+function hideList() { // gömmer diven där listan med föreslagna öl ligger
 
     beerListContainer.style.display = "none"
 }
 
-function clearList() { //tömmer ul på alla li
+function clearList() { // tömmer öl-ul på alla li
 
     ul.innerHTML = ""
 }
 
-function showList() { //visar list-diven
+function showList() { // visar list-diven
 
     beerListContainer.style.display = "block"
 }
 
-function clearInput() { //rensar input field
+function clearInput() { // rensar input field
 
     inputField.value = ""
 }
 
-function hideBeerInfoPage(page) {
+function invalidBeer() { // visar ett felmeddelande
 
-    page.style.display = "none"
-
+    errorMsg.innerHTML = "Ölen finns inte"
 }
 
-function showBeerInfoPage(page) {
+function showErrorMsg() { // visar ett felmeddelande
+
+    errorMsg.innerHTML = "Du måste ha minst tre bokstäver"
+}
+
+function hideErrorMsg() { // tar bort felmeddelandet
+
+    errorMsg.innerHTML = ""
+}
+
+function resetPages() { // reset currentPage till 1
+
+    currentPage = 1
+    displayedPage.innerHTML = currentPage
+}
+
+function hideBeerInfoPage(page) { //gömmer vald sida med detaljerad info
+
+    page.style.display = "none"
+}
+
+function showBeerInfoPage(page) { // visar vald sida med detaljerad info
 
     page.style.display = "block"
 }
 
-async function renderRandomBeerInfo() { //renderar ut random beer
+async function renderRandomBeerInfo() { //renderar ut den detaljerade infon om random beer
+
     const beerTitle = document.querySelector(".beer-name")
     const beerDesc = document.querySelector(".description")
     const alcoholVol = document.querySelector(".alcohol-by-volume")
@@ -176,12 +208,10 @@ async function renderRandomBeerInfo() { //renderar ut random beer
     }
 
     renderImageCard(randomBeer)
-
 }
 
-async function renderBeerInfo(inputBeer) { //renderar ut vald öl
+async function renderBeerInfo(inputBeer) { //renderar ut den detaljerade infon om en öl man sökt på
 
-    
     const beerTitle = document.querySelector(".chosen-beer-info .beer-name")
     const beerDesc = document.querySelector(".chosen-beer-info .description")
     const alcoholVol = document.querySelector(".chosen-beer-info .alcohol-by-volume")
@@ -191,7 +221,7 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl
     const brewerTips = document.querySelector(".chosen-beer-info .brewers-tips")
     const beerImg = document.querySelector(".chosen-beer-info .beer-info-img")
 
-    const chosenBeer = await getData(1,inputBeer)
+    const chosenBeer = await getData(1, inputBeer)
 
     for (i = 0; i < chosenBeer.length; i++) {
 
@@ -206,7 +236,6 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl
             brewerTips.innerHTML = `${chosenBeer[i].brewers_tips}`
             beerImg.src = `${chosenBeer[i].image_url}`
 
-            
             if (chosenBeer[i].image_url == null) {
 
                 beerImg.src = "images/ipaglass.png"
@@ -221,7 +250,7 @@ async function renderBeerInfo(inputBeer) { //renderar ut vald öl
 
 }
 
-function renderImageCard(beer) {//tar en öl som input och renderar ut bilden på den
+function renderImageCard(beer) { // tar en öl som input och renderar ut bilden på den
 
     const imageElement = document.querySelector("img")
 
@@ -236,17 +265,10 @@ function renderImageCard(beer) {//tar en öl som input och renderar ut bilden p�
 
 }
 
-
-
-const errorMsg = document.querySelector(".error-mess")
-
-async function showSuggestions(search) {//visar en lista på öl som matchar ens sökning
-
+async function getSuggestions(search) { // tar input från sökfältet och hämtar matchande data
 
     clearList()
-    
 
-    //let allSuggestions = []
     let result
 
     if (search.length >= 3) {
@@ -257,67 +279,30 @@ async function showSuggestions(search) {//visar en lista på öl som matchar ens
     else {
         hideList()
         showErrorMsg()
-        
+
         return
     }
 
-    // for (let i=0; i < result.length; i++){
-    //     allSuggestions.push(result[i].name) 
-    // }
-    //     suggestion = result[i].name 
-    //    if (suggestion.toLowerCase().includes(search.toLowerCase())) {
-    //         allSuggestions.push(suggestion)
-    //     }
-        
-    
-    divideSuggestions(result)
+    createSuggestionsList(result)
     countElements(search)
 }
 
-function invalidBeer() {
-    
-    errorMsg.innerHTML = "Ölen finns inte"
-}
+function createSuggestionsList(input) { // tar alla ölnamn som matchade och gör listobjekt av dem
 
-function showErrorMsg() {
-
-    errorMsg.innerHTML = "Du måste ha minst tre bokstäver"
-}
-
-function hideErrorMsg() {
-
-    errorMsg.innerHTML = ""
-}
-
-
-
-
-function divideSuggestions(input) {
-
-   let currentPageContent = input.map(beer => beer.name)
-
-    // [input[0].name, input[1].name, input[2].name, input[3].name, input[4].name,
-    // input[5].name, input[6].name, input[7].name, input[8].name, input[9].name]
+    let currentPageContent = input.map(beer => beer.name)
 
     currentPageContent.forEach(function (item) {
-
-        if (item != undefined) {
 
             const li = document.createElement("li")
             ul.append(li)
             li.innerHTML = item
 
-            return
-        }
     })
-
 }
 
+function countElements(search) { // räknar antal objekt i listan och bestämmer när pilarna för pagineringen ska gömmas
 
-
-function countElements(search) {
-    
-    var count = ul.childElementCount;
+    const count = ul.childElementCount;
 
     if (count < 1 && search.length >= 3) {
 
@@ -325,50 +310,18 @@ function countElements(search) {
         hideList()
     }
 
-    if (currentPage == 1){
-
+    if (currentPage == 1) {
         leftArrow.style.display = "none"
-    }else {
+
+    } else {
         leftArrow.style.display = "block"
     }
 
-    if (count < 10){
-
+    if (count < 10) {
         rightArrow.style.display = "none"
-    }else {
+
+    } else {
         rightArrow.style.display = "block"
     }
 }
 
-
-
-
-
-    const displayedPage = document.querySelector(".current-page")
-    displayedPage.innerHTML = currentPage
-    const leftArrow = document.querySelector(".left-arrow")
-    const rightArrow = document.querySelector(".right-arrow")
-    
-    leftArrow.addEventListener("click", () => {
-    
-        if (currentPage > 1) {
-            
-            displayedPage.innerHTML = currentPage -= 1
-            showSuggestions(search)
-        }
-    })
-    
-    rightArrow.addEventListener("click", () => {
-        
-        displayedPage.innerHTML = currentPage += 1
-        showSuggestions(search)
-        
-    })
-
-
-function resetPages(){
-
-currentPage = 1
-displayedPage.innerHTML = currentPage
-
-}
